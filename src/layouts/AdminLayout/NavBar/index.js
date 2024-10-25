@@ -46,7 +46,7 @@ const NavBar = () => {
           <div className="">
             <img src={logo} alt="Logo" style={{ width: '40px', height: '40px' }} />
           </div>
-          <span className="b-title">Ulevus</span>
+          <span className="b-title">Goshenlights</span>
         </Link>
         <Link to="#" className={moreClass.join(' ')} onClick={() => setMoreToggle(!moreToggle)}>
           <i className="feather icon-more-vertical" />

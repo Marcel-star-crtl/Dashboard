@@ -21,7 +21,7 @@ const NavLogo = () => {
           <div className="">
             <img src={logo} alt="Logo" style={{ width: '40px', height: '40px' }} />
           </div>
-          <span className="b-title">Ulevus</span>
+          <span className="b-title">Goshen lights</span>
         </Link>
         <Link to="#" className={toggleClass.join(' ')} id="mobile-collapse" onClick={() => dispatch({ type: actionType.COLLAPSE_MENU })}>
           <span />

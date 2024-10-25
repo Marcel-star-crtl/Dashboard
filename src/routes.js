@@ -1,20 +1,18 @@
 import React, { Suspense, Fragment, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { auth } from './config/firebase';
-
 import Loader from './components/Loader/Loader';
 import AdminLayout from './layouts/AdminLayout';
 
-import { BASE_URL } from './config/constant';
-
-const PrivateRoute = ({ children }) => {
-  return auth.currentUser ? children : <Navigate to="/login" />;
-};
+const PrivateRoute = ({ children }) => (
+  auth.currentUser ? children : <Navigate to="/login" replace />
+);
 
 export const renderRoutes = (routes = []) => (
   <Suspense fallback={<Loader />}>
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      {/* Initial route should direct to the overview page */}
+      <Route path="/" element={<Navigate to="/app/overview" replace />} />
       {routes.map((route, i) => {
         const Guard = route.guard || Fragment;
         const Layout = route.layout || Fragment;
@@ -58,43 +56,49 @@ const routes = [
     element: lazy(() => import('./views/auth/reset-password/ResetPassword1'))
   },
   {
+    // Wrap the admin routes in AdminLayout for the sidebar
     path: '*',
     layout: AdminLayout,
-    guard: PrivateRoute,
     routes: [
       {
         exact: true,
-        path: '/overview',
+        path: '/app/overview',  // Overview page is now accessible without PrivateRoute guard
         element: lazy(() => import('./components/Overview/index'))
       },
       {
         exact: true,
         path: '/overview-project',
+        guard: PrivateRoute,  // Only protect routes requiring authentication
         element: lazy(() => import('./components/OverviewProject/index'))
       },
       {
         exact: true,
         path: '/create',
+        guard: PrivateRoute,
         element: lazy(() => import('./components/CreateNews/index'))
       },
       {
         exact: true,
         path: '/create-project',
+        guard: PrivateRoute,
         element: lazy(() => import('./components/CreateProject/index'))
       },
       {
         exact: true,
         path: '/moderate',
+        guard: PrivateRoute,
         element: lazy(() => import('./components/Moderation/index'))
       },
       {
         exact: true,
         path: '/team-management',
+        guard: PrivateRoute,
         element: lazy(() => import('./components/CreateTeamMember/index'))
       },
       {
         exact: true,
         path: '/team-overview',
+        guard: PrivateRoute,
         element: lazy(() => import('./components/TeamOverview/index'))
       }
     ]
@@ -102,6 +106,119 @@ const routes = [
 ];
 
 export default routes;
+
+
+
+
+
+
+
+
+
+// import React, { Suspense, Fragment, lazy } from 'react';
+// import { Routes, Route, Navigate } from 'react-router-dom';
+// import { auth } from './config/firebase';
+
+// import Loader from './components/Loader/Loader';
+// import AdminLayout from './layouts/AdminLayout';
+
+// import { BASE_URL } from './config/constant';
+
+// const PrivateRoute = ({ children }) => {
+//   return auth.currentUser ? children : <Navigate to="/login" />;
+// };
+
+// export const renderRoutes = (routes = []) => (
+//   <Suspense fallback={<Loader />}>
+//     <Routes>
+//       <Route path="/" element={<Navigate to="/login" replace />} />
+//       {routes.map((route, i) => {
+//         const Guard = route.guard || Fragment;
+//         const Layout = route.layout || Fragment;
+//         const Element = route.element;
+
+//         return (
+//           <Route
+//             key={i}
+//             path={route.path}
+//             element={
+//               <Guard>
+//                 <Layout>{route.routes ? renderRoutes(route.routes) : <Element props={true} />}</Layout>
+//               </Guard>
+//             }
+//           />
+//         );
+//       })}
+//     </Routes>
+//   </Suspense>
+// );
+
+// const routes = [
+//   {
+//     exact: true,
+//     path: '/login',
+//     element: lazy(() => import('./views/auth/signin/SignIn1')),
+//   },
+//   {
+//     exact: true,
+//     path: '/auth/signin-1',
+//     element: lazy(() => import('./views/auth/signin/SignIn1'))
+//   },
+//   {
+//     exact: true,
+//     path: '/auth/signup-1',
+//     element: lazy(() => import('./views/auth/signup/SignUp1'))
+//   },
+//   {
+//     exact: true,
+//     path: '/auth/reset-password-1',
+//     element: lazy(() => import('./views/auth/reset-password/ResetPassword1'))
+//   },
+//   {
+//     path: '*',
+//     layout: AdminLayout,
+//     guard: PrivateRoute,
+//     routes: [
+//       {
+//         exact: true,
+//         path: '/overview',
+//         element: lazy(() => import('./components/Overview/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/overview-project',
+//         element: lazy(() => import('./components/OverviewProject/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/create',
+//         element: lazy(() => import('./components/CreateNews/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/create-project',
+//         element: lazy(() => import('./components/CreateProject/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/moderate',
+//         element: lazy(() => import('./components/Moderation/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/team-management',
+//         element: lazy(() => import('./components/CreateTeamMember/index'))
+//       },
+//       {
+//         exact: true,
+//         path: '/team-overview',
+//         element: lazy(() => import('./components/TeamOverview/index'))
+//       }
+//     ]
+//   }
+// ];
+
+// export default routes;
 
 
 

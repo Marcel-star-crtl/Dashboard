@@ -11,12 +11,24 @@ import { useNavigate } from 'react-router-dom';
 const FirebaseLogin = ({ className, ...rest }) => {
   const navigate = useNavigate();
 
+  // const handleLogin = async (values, { setSubmitting, setStatus }) => {
+  //   const { email, password } = values;
+
+  //   try {
+  //     await signInWithEmailAndPassword(auth, email, password);
+  //     console.log('Login successful!');
+  //     navigate("/app/overview");
+  //   } catch (error) {
+  //     setStatus({ submit: error.message });
+  //   } finally {
+  //     setSubmitting(false);
+  //   }
+  // };
+
   const handleLogin = async (values, { setSubmitting, setStatus }) => {
     const { email, password } = values;
-
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login successful!');
       navigate("/app/overview");
     } catch (error) {
       setStatus({ submit: error.message });
