@@ -1,8 +1,9 @@
 {
   "name": "datta-able-free-react-admin-template",
   "version": "2.0.0",
-  "private": false,
-  "homepage": "./",
+  "private": true,
+  "main": "index.js",
+  "homepage": "/",
   "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
