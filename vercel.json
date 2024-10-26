@@ -1,12 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
-    }
-  ],
   "routes": [
     {
       "src": "/static/(.*)",
@@ -26,8 +19,7 @@
     }
   ],
   "env": {
-    "REACT_APP_VERSION": "v2.0.0",
     "REACT_APP_BASE_NAME": "/",
-    "PUBLIC_URL": "https://dashboard-git-main-marcel-star-crtl.vercel.app"
+    "PUBLIC_URL": "https://dashboard-tau-six-91.vercel.app"
   }
 }

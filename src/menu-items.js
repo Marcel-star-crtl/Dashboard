@@ -120,6 +120,121 @@
 
 
 
+// import React from 'react';
+// import { signOut } from 'firebase/auth';
+// import { auth } from './config/firebase';
+// import { useNavigate } from 'react-router-dom';
+
+// const LogoutButton = () => {
+//   const navigate = useNavigate();
+
+//   const handleLogout = async () => {
+//     try {
+//       await signOut(auth);
+//       navigate('/login');
+//     } catch (error) {
+//       console.error('Error logging out:', error);
+//     }
+//   };
+
+//   return (
+//     <button 
+//       onClick={handleLogout} 
+//       style={{ 
+//         background: 'none', 
+//         border: 'none', 
+//         color: 'inherit', 
+//         cursor: 'pointer',
+//         width: '100%',
+//         textAlign: 'left',
+//         padding: '10px 20px'
+//       }}
+//     >
+//       <i className="feather icon-log-out" style={{ marginRight: '10px' }}></i>
+//       Logout
+//     </button>
+//   );
+// };
+
+// const menuItems = {
+//   items: [
+//     {
+//       id: 'navigation',
+//       title: 'Navigation',
+//       type: 'group',
+//       icon: 'icon-navigation',
+//       children: [
+//         {
+//           id: 'overview',
+//           title: 'Overview',
+//           type: 'item',
+//           icon: 'feather icon-home',
+//           url: '/overview'
+//         },
+//         {
+//           id: 'create',
+//           title: 'Create',
+//           type: 'item',
+//           icon: 'feather icon-home',
+//           url: '/create'
+//         },
+//         {
+//           id: 'overview-project',
+//           title: 'Project Overview',
+//           type: 'item',
+//           icon: 'feather icon-briefcase',
+//           url: '/overview-project'
+//         },
+//         {
+//           id: 'create-project',
+//           title: 'Create Project',
+//           type: 'item',
+//           icon: 'feather icon-briefcase',
+//           url: '/create-project'
+//         },
+//         {
+//           id: 'team-management',
+//           title: 'Team Management',
+//           type: 'item',
+//           icon: 'feather icon-users',
+//           url: '/team-management'
+//         },
+//         {
+//           id: 'team-overview',
+//           title: 'Team Overview',
+//           type: 'item',
+//           icon: 'feather icon-users',
+//           url: '/team-overview'
+//         }
+//       ]
+//     },
+//     {
+//       id: 'logout-group',
+//       type: 'group',
+//       children: [
+//         {
+//           id: 'logout',
+//           title: <LogoutButton />,
+//           type: 'item',
+//           className: 'menu-item-logout'
+//         }
+//       ]
+//     }
+//   ]
+// };
+
+// export default menuItems;
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from './config/firebase';
@@ -139,18 +254,9 @@ const LogoutButton = () => {
 
   return (
     <button 
-      onClick={handleLogout} 
-      style={{ 
-        background: 'none', 
-        border: 'none', 
-        color: 'inherit', 
-        cursor: 'pointer',
-        width: '100%',
-        textAlign: 'left',
-        padding: '10px 20px'
-      }}
+      onClick={handleLogout}
+      className="btn btn-link text-danger"
     >
-      <i className="feather icon-log-out" style={{ marginRight: '10px' }}></i>
       Logout
     </button>
   );
@@ -169,42 +275,42 @@ const menuItems = {
           title: 'Overview',
           type: 'item',
           icon: 'feather icon-home',
-          url: '/overview'
+          url: '/app/overview'  // Updated path
         },
         {
           id: 'create',
           title: 'Create',
           type: 'item',
           icon: 'feather icon-home',
-          url: '/create'
+          url: '/app/create'  // Updated path
         },
         {
           id: 'overview-project',
           title: 'Project Overview',
           type: 'item',
           icon: 'feather icon-briefcase',
-          url: '/overview-project'
+          url: '/app/overview-project'  // Updated path
         },
         {
           id: 'create-project',
           title: 'Create Project',
           type: 'item',
           icon: 'feather icon-briefcase',
-          url: '/create-project'
+          url: '/app/create-project'  // Updated path
         },
         {
           id: 'team-management',
           title: 'Team Management',
           type: 'item',
           icon: 'feather icon-users',
-          url: '/team-management'
+          url: '/app/team-management'  // Updated path
         },
         {
           id: 'team-overview',
           title: 'Team Overview',
           type: 'item',
           icon: 'feather icon-users',
-          url: '/team-overview'
+          url: '/app/team-overview'  // Updated path
         }
       ]
     },

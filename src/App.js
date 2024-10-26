@@ -38,20 +38,15 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import routes, { renderRoutes } from './routes';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const App = () => {
-  // Get basename from environment or default to '/'
-  const basename = process.env.REACT_APP_BASE_NAME || '/';
-  
-  // Get public URL from environment
-  const publicUrl = process.env.PUBLIC_URL || '';
-  
   return (
-    <React.Fragment>
-      <BrowserRouter basename={basename}>
+    <ErrorBoundary>
+      <BrowserRouter>
         {renderRoutes(routes)}
       </BrowserRouter>
-    </React.Fragment>
+    </ErrorBoundary>
   );
 };
 
