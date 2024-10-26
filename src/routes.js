@@ -185,9 +185,9 @@ export const renderRoutes = (routes = []) => (
             key={i}
             path={route.path}
             element={
-              <Guard>
+              // <Guard>
                 <Layout>{route.routes ? renderRoutes(route.routes) : <Element props={true} />}</Layout>
-              </Guard>
+              // </Guard>
             }
           />
         );
