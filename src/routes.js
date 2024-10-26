@@ -224,7 +224,7 @@ const routes = [
     routes: [
       {
         exact: true,
-        path: '/app/overview',  // Overview page is now accessible without PrivateRoute guard
+        path: '/app/overview',  
         element: lazy(() => import('./components/Overview/index'))
       },
       {
