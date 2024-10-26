@@ -4,7 +4,29 @@ import { auth } from './config/firebase';
 import Loader from './components/Loader/Loader';
 import AdminLayout from './layouts/AdminLayout';
 
+// Wrap lazy components with error boundary
+const lazyWithRetry = (componentImport) =>
+  lazy(async () => {
+    const pageHasAlreadyBeenForceRefreshed = JSON.parse(
+      window.sessionStorage.getItem('page-has-been-force-refreshed') || 'false'
+    );
+
+    try {
+      const component = await componentImport();
+      window.sessionStorage.setItem('page-has-been-force-refreshed', 'false');
+      return component;
+    } catch (error) {
+      if (!pageHasAlreadyBeenForceRefreshed) {
+        window.sessionStorage.setItem('page-has-been-force-refreshed', 'true');
+        window.location.reload();
+      }
+
+      throw error;
+    }
+  });
+
 const PrivateRoute = ({ children }) => {
+  // Add loading state for auth
   const [isAuthChecked, setIsAuthChecked] = React.useState(false);
 
   React.useEffect(() => {
@@ -40,7 +62,11 @@ export const renderRoutes = (routes = []) => (
               <Guard>
                 <Layout>
                   <Suspense fallback={<Loader />}>
-                    {route.routes ? renderRoutes(route.routes) : <Element />}
+                    {route.routes ? (
+                      renderRoutes(route.routes)
+                    ) : (
+                      <Element />
+                    )}
                   </Suspense>
                 </Layout>
               </Guard>
@@ -49,11 +75,85 @@ export const renderRoutes = (routes = []) => (
         );
       })}
 
-      {/* Catch all route */}
+      {/* Catch-all route */}
       <Route path="*" element={<Navigate to="/app/overview" replace />} />
     </Routes>
   </Suspense>
 );
+
+const routes = [
+  {
+    exact: true,
+    path: '/login',
+    element: lazyWithRetry(() => import('./views/auth/signin/SignIn1')),
+  },
+  {
+    exact: true,
+    path: '/auth/signin-1',
+    element: lazyWithRetry(() => import('./views/auth/signin/SignIn1'))
+  },
+  {
+    exact: true,
+    path: '/auth/signup-1',
+    element: lazyWithRetry(() => import('./views/auth/signup/SignUp1'))
+  },
+  {
+    exact: true,
+    path: '/auth/reset-password-1',
+    element: lazyWithRetry(() => import('./views/auth/reset-password/ResetPassword1'))
+  },
+  {
+    path: '/app/*',
+    layout: AdminLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/app/overview',
+        element: lazyWithRetry(() => import('./components/Overview/index'))
+      },
+      {
+        exact: true,
+        path: '/app/overview-project',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/OverviewProject/index'))
+      },
+      {
+        exact: true,
+        path: '/app/create',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/CreateNews/index'))
+      },
+      {
+        exact: true,
+        path: '/app/create-project',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/CreateProject/index'))
+      },
+      {
+        exact: true,
+        path: '/app/moderate',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/Moderation/index'))
+      },
+      {
+        exact: true,
+        path: '/app/team-management',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/CreateTeamMember/index'))
+      },
+      {
+        exact: true,
+        path: '/app/team-overview',
+        guard: PrivateRoute,
+        element: lazyWithRetry(() => import('./components/TeamOverview/index'))
+      }
+    ]
+  }
+];
+
+export default routes;
+
+
 
 
 

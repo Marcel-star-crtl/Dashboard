@@ -38,7 +38,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import routes, { renderRoutes } from './routes';
-import ErrorBoundary from './components/ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 
 const App = () => {
   return (
